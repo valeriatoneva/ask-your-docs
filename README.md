@@ -13,25 +13,33 @@ It runs in two modes:
 
 The sample documents in `data/docs/` are short notes about Angular, RxJS, large-data performance and REST error handling.
 
-## Demo
-
-Indexing the sample documents, asking a question, and running the retrieval evaluation (offline mode):
-
-![Terminal demo of Ask Your Docs](docs/demo.png)
-
 ## How it works
 
-```
-documents --> chunks (80 words, 20 overlap) --> embeddings --> vector store (NumPy)
-                                                                     |
-question --> embedding --> cosine similarity --> top-k chunks --> LLM prompt --> answer + sources
-```
+![Architecture: documents are chunked, embedded and stored; a question is embedded, matched against the store, turned into a prompt and answered with sources](docs/architecture.png)
 
 1. **Chunking** (`src/rag/chunking.py`): each document is split into overlapping word windows. The overlap keeps a sentence retrievable even when it falls on a chunk border.
 2. **Embeddings** (`src/rag/embeddings.py`): text becomes a vector. TF-IDF matches keywords; Gemini embeddings match meaning, so they also find synonyms.
 3. **Vector store** (`src/rag/store.py`): vectors are L2-normalised, so cosine similarity is one matrix-vector product. A NumPy array is enough for thousands of chunks.
 4. **Generation** (`src/rag/generator.py`): the prompt tells the model to answer only from the context, to say "I don't know" otherwise, and to cite sources. This limits hallucination.
 5. **Evaluation** (`eval/run_eval.py`): a labelled question set measures retrieval with hit@k and MRR, so changes to chunk size or the embedding model can be compared with numbers.
+
+## Demo
+
+Asking questions in offline mode. The first answer comes with its sources. The second question has no answer in the documents, so the tool says so instead of making something up.
+
+![Terminal: indexing the documents, a question with an answer and sources, and a question that is correctly refused](docs/demo-ask.png)
+
+### What the search sees
+
+For one question, every chunk gets a similarity score. Only the best three are passed on to the answer step.
+
+![Bar chart of cosine similarity between a question and all 18 chunks, top three highlighted](docs/retrieval-scores.png)
+
+### Test run
+
+All 12 tests pass, and retrieval finds the right document for 10 out of 10 labelled questions.
+
+![Terminal: 12 tests passing and the evaluation result hit@3 1.00](docs/demo-tests.png)
 
 ## Quick start
 
