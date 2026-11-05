@@ -1,0 +1,12 @@
+[
+  {"question": "How do I read and change the value of a signal?", "expected_source": "angular-signals.md"},
+  {"question": "What is a computed signal and when does it recalculate?", "expected_source": "angular-signals.md"},
+  {"question": "How do I load a standalone component lazily on a route?", "expected_source": "standalone-components.md"},
+  {"question": "How can I migrate NgModule code to standalone components?", "expected_source": "standalone-components.md"},
+  {"question": "Which RxJS operator cancels the previous request in a typeahead search?", "expected_source": "rxjs-basics.md"},
+  {"question": "How do I avoid memory leaks from subscriptions?", "expected_source": "rxjs-basics.md"},
+  {"question": "Why does virtual scrolling help with tens of thousands of rows?", "expected_source": "large-data-performance.md"},
+  {"question": "Why does server side pagination need a stable sort order?", "expected_source": "large-data-performance.md"},
+  {"question": "What does HTTP status 403 mean?", "expected_source": "rest-api-error-handling.md"},
+  {"question": "How should an Angular app handle failed HTTP responses in one place?", "expected_source": "rest-api-error-handling.md"}
+]

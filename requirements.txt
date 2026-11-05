@@ -1,0 +1,5 @@
+numpy>=1.26
+scikit-learn>=1.4
+google-genai>=1.0        # only needed for the Gemini backend
+python-dotenv>=1.0       # optional: loads GEMINI_API_KEY from .env
+pytest>=8.0
